@@ -1,0 +1,47 @@
+export const projects = [
+  {
+    number: "01", slug: "relayboard", name: "RelayBoard API", kind: "Backend / REST API",
+    status: "Completed", statusDetail: "Completed API scope; PostgreSQL integration tests also run in GitHub Actions. The service is documented for local Docker setup.",
+    lead: "A collaborative task-management API with workspace ownership, explicit permissions, and project-scoped work.",
+    problem: "A task list becomes a more demanding backend problem when teams need workspaces, projects, members, assignments, and different levels of access. A valid login cannot by itself decide who may change a workspace, edit a project, or see another team's tasks.",
+    solution: "RelayBoard implements a REST API in Express with JWT authentication, bcrypt password hashing, workspace-role authorization, and Prisma-backed PostgreSQL persistence. A workspace creator becomes its owner. Owners and admins manage projects and members within defined permissions; members can work with tasks. The API covers project and task creation, editing and deletion, status transitions, assignee changes, and membership removal that clears affected assignments. Routes check workspace scope so a caller cannot access a project through a different workspace.",
+    value: "The finished project demonstrates an end-to-end request path from bearer token through role checks and business rules to relational data. Its documented permissions matrix makes behavior reviewable, while integration tests exercise login, token formatting, role restrictions, status changes, and cross-workspace isolation. Docker supplies local PostgreSQL, and GitHub Actions runs the test suite on pushes and pull requests. The project shows a complete portfolio API implementation without claiming that it is a hosted production service.",
+    detail: "Delivered: authentication; workspace, member, project, and task lifecycles; role-aware assignments and status updates; cross-workspace guards; and integration tests.",
+    stack: ["Node.js", "Express.js", "Prisma ORM", "PostgreSQL", "JWT", "Docker"],
+    repository: "https://github.com/mahisiddhant0-oss/RelayBoardAPI", repositoryVerified: true,
+    diagram: "relayboard", flow: ["Request", "Verify token", "Check permission", "Run task logic", "Persist data"],
+  },
+  {
+    number: "02", slug: "move-net", name: "Move Net", kind: "Logistics / Marketplace",
+    status: "In active development", statusDetail: "The operational foundation is implemented and locally tested. Loads, matching, offers, bookings, AI assistance, and production deployment remain planned.",
+    lead: "A full-stack logistics marketplace foundation built around a future goal: fewer empty return journeys for transport agencies.",
+    problem: "Trucks often return without cargo after a delivery, while shippers coordinate available capacity through fragmented calls and manual processes. Before matching routes and loads, the platform needs trustworthy accounts, agency-owned fleet data, and availability windows that cannot conflict.",
+    solution: "Move Net delivers a React and TypeScript SaaS interface with public pages, sign-in, registration, and protected shipper and agency dashboard shells. Its modular-monolith Express backend separates HTTP handling, domain services, and persistence. Argon2id protects passwords; JWT access tokens and rotating refresh sessions secure accounts. Zod validates requests, and role-based, agency-scoped checks protect profiles, trucks, drivers, and published availability APIs. PostgreSQL constraints reject overlapping published windows for a truck or assigned driver. PostgreSQL with PostGIS and Redis run through Docker Compose; Redis connectivity is verified, while application caching and rate limiting are planned.",
+    value: "The implemented foundation establishes secure ownership and scheduling integrity before load discovery and bookings are introduced. It has 31 locally passing backend integration tests across authentication, agencies, trucks, drivers, and availability; frontend type-checking and production builds have also passed locally. Future stages cover load posting, geospatial routing and matching, offers, bookings, notifications, and a read-only AI assistant. The platform has no production deployment, performance benchmark, or market-readiness claim yet.",
+    detail: "Delivered: frontend foundation, secure authentication, agency profiles, fleet and driver APIs, published availability, database overlap protection, and 31 passing local integration tests.",
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Zod", "Argon2id", "Prisma", "PostgreSQL / PostGIS", "Redis (local)", "Docker Compose", "Vitest / Supertest"],
+    repository: "https://github.com/mahisiddhant0-oss/movenet", repositoryVerified: true,
+    diagram: "movenet", flow: ["React client", "Express API", "Auth + Zod", "Module service", "Prisma → Postgres"],
+  },
+  {
+    number: "03", slug: "redistack", name: "Redistack", kind: "Backend systems / Redis",
+    status: "Completed", statusDetail: "The portfolio-focused Redis learning project and interactive visualizer are complete. It runs locally with Fastify and Docker Compose; it is not presented as a published npm package.",
+    lead: "A completed Redis systems project that makes backend patterns visible through a working API and browser dashboard.",
+    problem: "Caching is only one of several ways Redis can support a backend. Sessions need expiration and revocation; rate limits need atomic counters; leaderboards need ordered scores; notifications and background jobs need reliable state transitions. Exploring these patterns separately can make their tradeoffs hard to see together.",
+    solution: "Redistack implements a cache-aside layer with JSON values and TTLs: a hit returns the cached value, while a miss reads the source and populates Redis. A Fastify API also demonstrates multi-device session management, fixed-window rate limiting with an atomic Lua script, sorted-set leaderboards, Pub/Sub notifications delivered over WebSockets, and a Redis-backed job queue. The queue includes retries, delayed jobs, idempotency keys, leases, and recovery of stalled work. A browser visualizer walks through cache, session, leaderboard, notification, and job flows against the local Redis container.",
+    value: "The completed portfolio scope offers a concrete way to inspect how Redis data structures map to backend problems and to demonstrate each path live. TypeScript validation and Redis-backed tests cover the main stores, routes, metrics, and job behavior. Docker Compose makes the local environment repeatable. The cache demo shows a hit after a miss, but no workload-wide latency benchmark or production deployment is claimed; publishing a reusable npm package is outside this completed scope.",
+    detail: "Delivered: cache, sessions, rate limiting, leaderboards, live notifications, job processing and recovery, tests, metrics, and the interactive Redis visualizer.",
+    stack: ["TypeScript", "Node.js", "Fastify", "Redis", "ioredis", "WebSockets", "Docker Compose"],
+    repository: "https://github.com/mahisiddhant0-oss/Redistack", repositoryVerified: true,
+    diagram: "redistack", flow: ["Application read", "Redis lookup", "Hit: return", "Miss: source read", "Write with TTL"],
+  },
+];
+
+export const skillGroups = [
+  { name: "Programming languages", items: ["C++", "JavaScript", "TypeScript", "SQL"] },
+  { name: "Frontend", items: ["HTML", "CSS", "React.js", "Next.js", "Tailwind CSS"] },
+  { name: "Backend", items: ["Node.js", "Express.js", "REST APIs", "JWT", "Prisma ORM"] },
+  { name: "Databases & caching", items: ["PostgreSQL", "SQLite", "Redis"] },
+  { name: "Development & deployment", items: ["Git", "GitHub", "Docker", "Vercel", "Render"] },
+  { name: "Computer science", items: ["DSA", "OOP", "Operating Systems", "Computer Networks", "DBMS", "System Design"] },
+];
