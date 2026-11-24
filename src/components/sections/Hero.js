@@ -32,7 +32,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (reduced) { progressRef.current = 0; invalidateRef.current?.(); return; }
+    if (reduced || mobile || window.matchMedia("(max-width: 700px)").matches) { progressRef.current = 0; invalidateRef.current?.(); return; }
     gsap.registerPlugin(ScrollTrigger);
     const introNode = intro.current, endingNode = ending.current, panelNode = successPanel.current, bottomNode = heroBottom.current;
     const timeline = gsap.timeline({ scrollTrigger: {
@@ -46,14 +46,14 @@ export default function Hero() {
       .fromTo(panelNode, { opacity: 0, scale: .9, y: 28 }, { opacity: 1, scale: 1, y: 0, duration: .12, ease: "power2.out" }, .88);
     trigger.current = timeline.scrollTrigger;
     return () => { timeline.scrollTrigger?.kill(); timeline.kill(); gsap.set([introNode, endingNode, panelNode, bottomNode], { clearProps: "opacity,transform,pointerEvents" }); introNode.inert = false; endingNode.inert = true; bottomNode.inert = false; trigger.current = null; };
-  }, [reduced]);
+  }, [reduced, mobile]);
 
   function skip() { const about = document.getElementById("about"); if (!about) return; const top = about.getBoundingClientRect().top + window.scrollY - 76; window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" }); }
 
   return <section className="hero" id="top" ref={section} aria-label="Introduction"><div className="hero-frame">
     <div className="hero-ambient" aria-hidden="true" />
     <div className="hero-inner"><div className="hero-content" ref={intro}><p className="hero-kicker"><span className="online-light" /> AVAILABLE FOR OPPORTUNITIES <span className="kicker-divider">/</span> PORTFOLIO 2026</p><h1>MAHI<br />SIDDHANT<br /><span>SHARMA</span><b>.</b></h1><div className="hero-rule" /><p className="hero-identity">Software Developer <span>/</span> Full-Stack &amp; Backend Engineering</p><p className="hero-description">Designing thoughtful digital experiences and building the systems that make them work.</p><div className="hero-actions"><a className="button button-primary" href="#projects">Explore projects <span aria-hidden="true">↗</span></a><a className="button button-outline" href="/resume.pdf" target="_blank" rel="noopener noreferrer">View resume <span aria-hidden="true">↗</span></a></div><div className="hero-social"><a href="https://github.com/mahisiddhant0-oss" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">GITHUB ↗</a><a href="https://www.linkedin.com/in/mahikness/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LINKEDIN ↗</a><a href="https://www.instagram.com/mahikness/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">INSTAGRAM ↗</a></div></div>
-    <div className={`laptop-stage ${sceneReady && !reduced ? "laptop-ready" : ""}`} aria-label="Illustration of a laptop showing green program code"><LaptopFallback />{canRender3D && !reduced && <div className="laptop-canvas"><LaptopScene progressRef={progressRef} invalidateRef={invalidateRef} mobile={mobile} onReady={() => setSceneReady(true)} onLost={() => { setSceneReady(false); setCanRender3D(false); }} /></div>}</div></div>
+    <div className={`laptop-stage ${sceneReady && !reduced && !mobile ? "laptop-ready" : ""}`} aria-label="Illustration of a laptop showing green program code"><LaptopFallback />{canRender3D && !reduced && !mobile && <div className="laptop-canvas"><LaptopScene progressRef={progressRef} invalidateRef={invalidateRef} mobile={mobile} onReady={() => setSceneReady(true)} onLost={() => { setSceneReady(false); setCanRender3D(false); }} /></div>}</div></div>
     <div className="hero-ending" ref={ending} inert={true}>
       <div className="success-panel" ref={successPanel}>
         <span className="success-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 4.5 4.5L19 7" /></svg></span>
