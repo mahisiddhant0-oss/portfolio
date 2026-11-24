@@ -192,3 +192,15 @@ button:focus-visible,a:focus-visible { outline:2px solid var(--accent); outline-
 @media (max-width:700px) { .contact-socials { margin-top:55px; } .social-link-grid { grid-template-columns:1fr; } .social-link,.social-link + .social-link { padding:18px 0; border-left:0; } .social-link + .social-link { border-top:1px solid #314634; } .social-icon { width:48px; height:48px; } .social-link-copy strong { font-size:16px; } .social-link-copy small { font-size:10px; } .contact-socials + .footer-bottom { margin-top:68px; } }
 
 @media (max-width:700px) { .hero-ending { inset:0; padding:84px 18px 30px; } .success-panel { padding:38px 16px 34px; border-radius:9px; } .success-icon { width:50px; height:50px; margin-bottom:24px; } .hero-ending h2 { font-size:clamp(34px,8.4vw,56px); white-space:normal; } .ending-label { font-size:8px; letter-spacing:.11em; } .hero-ending p { font-size:15px; } }
+
+/* On phones the introduction is regular document content, with a static laptop. */
+@media (max-width:700px) {
+  .hero { height:auto; min-height:0; }
+  .hero-frame { height:auto; overflow:visible; }
+  .hero-inner { height:auto; flex-direction:column; align-items:stretch; padding-bottom:72px; }
+  .hero-content { padding-top:94px; }
+  .hero-social { flex-wrap:wrap; line-height:1.5; }
+  .laptop-stage { position:relative; inset:auto; width:100%; height:auto; margin-top:45px; }
+  .fallback-laptop { position:relative; top:auto; left:auto; width:min(80vw,420px); margin:0 auto; transform:perspective(900px) rotateY(-13deg); }
+  .laptop-canvas,.hero-ending,.hero-bottom { display:none; }
+}
